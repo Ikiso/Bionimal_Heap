@@ -39,7 +39,7 @@ public:
 		{
 			newUnit->parent = Unit->parent;
 		}
-		newUnit->child = createUnit(newUnit, "child");
+ 		newUnit->child = createUnit(newUnit, "child");
 		newUnit->sibling = createUnit(newUnit, "sibling");
 		return newUnit;
 	}

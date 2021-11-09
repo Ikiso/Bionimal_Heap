@@ -2,6 +2,7 @@
 #include <bitset> //для создания по битам
 #include <string>
 #include <iostream> //для cout
+#include <iomanip>
 using namespace std;
 
 void binomial_heap::create(int size) {
@@ -17,6 +18,7 @@ void binomial_heap::create(int size) {
 			}
 		}
 	}
+	cout << endl;
 	for (int i = 31, j = 0; i >= 0; i--, j++) {
 		if (str[i] == '1') {
 			if (first == 1) {
@@ -49,13 +51,55 @@ void binomial_heap::create(int size) {
 				temp->next = newNode;
 				createTree(newNode->root);
 			}
-			cout << "\nB - " << j;
 		}
 	}
 }
 
+void binomial_heap::view(string nameHeap){
+	node* temp = head;
+	node* temp1;
+	if (temp == NULL) {
+		return;
+	}
+	do {
+		cout << nameHeap << ":(" << temp->root->degree << "|" << temp->root->key << ")   ";
+		temp1 = temp;
+		temp = temp->next;
+	} while (temp1->next != NULL);
+}
+
+void binomial_heap::view(int key, string nameHeap) {
+	node* temp = head;
+	while (temp->next != NULL && temp->root->key != key) {
+		temp = temp->next;
+	}
+	if (temp->root->key != key) {
+		return;
+	}
+	cout << nameHeap << ":(" << temp->root->degree << "|" << temp->root->key << ")   \n";
+	viewUnit(temp->root->child, nameHeap);
+}
+
+void binomial_heap::viewUnit(unit* Unit, string nameHeap) {
+	if (Unit == NULL) {
+		return;
+	}
+	unit* temp = Unit;
+	unit* temp1 = Unit;
+	do {
+		cout << nameHeap << ":(" << temp1->degree << "|" << temp1->key << ") ";// << setw(5 * temp1->degree) << ' ';
+		temp1 = temp1->sibling;
+	} while (temp1 != NULL);
+	cout << endl;
+	viewUnit(temp->child, nameHeap);
+}
+
 binomial_heap::binomial_heap(int size) {
 	create(size);
+}
+
+binomial_heap::binomial_heap(node* head) {
+	this->head = head;
 }
 
 binomial_heap::binomial_heap() {
