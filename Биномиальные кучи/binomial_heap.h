@@ -66,7 +66,7 @@ public:
 		return NULL;
 	}
 	void view(string nameHeap);
-	void view(int key, string nameHeap);
+	void view(int degree, string nameHeap);
 	void merge(binomial_heap H);
 	void insert(node*& Node);
 };

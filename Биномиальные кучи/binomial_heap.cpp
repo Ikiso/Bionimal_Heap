@@ -68,12 +68,12 @@ void binomial_heap::view(string nameHeap){
 	} while (temp1->next != NULL);
 }
 
-void binomial_heap::view(int key, string nameHeap) {
+void binomial_heap::view(int degree, string nameHeap) {
 	node* temp = head;
-	while (temp->next != NULL && temp->root->key != key) {
+	while (temp->next != NULL && temp->root->degree != degree) {
 		temp = temp->next;
 	}
-	if (temp->root->key != key) {
+	if (temp->root->degree != degree) {
 		return;
 	}
 	cout << nameHeap << ":(" << temp->root->degree << "|" << temp->root->key << ")   \n";
