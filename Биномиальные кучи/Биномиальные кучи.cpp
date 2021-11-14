@@ -15,7 +15,7 @@ int main()
     cin >> temp;
     binomial_heap H{temp};
     H.view("H");
-    cout << "\nВведите ключ узла, который требуется удалить: ";
+    cout << "\nВведите индекс узла, который требуется удалить: ";
     cin >> temp;
     H.view(temp, "H");
     cout << endl;
@@ -24,5 +24,9 @@ int main()
     cout << endl << '+' << endl;
     D.view("D");
     cout << endl << endl;
-    D.view(D.head->root->key, "D");
+    H.merge(D);
+    H.view("H");
+    cout << "Чтобы получить список элементов в корне введите ключ объекта: ";
+    cin >> temp;
+    H.view(temp, "H");
 }

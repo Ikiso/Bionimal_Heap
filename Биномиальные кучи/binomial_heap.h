@@ -11,13 +11,13 @@ public:
 	binomial_heap(node* head);
 	node* head = new node; //голова списка
 	void create(int size); //функция создания элементов по числу узлов
-	node* deleteRoot(int key) {
+	node* deleteRoot(int degree) {
 		node* temp = head;
 		node* temp1 = head;
-		while (temp->next != NULL && temp->root->key != key) {
+		while (temp->next != NULL && temp->root->degree != degree) {
 			temp = temp->next;
 		}
-		if (temp->root->key != key) {
+		if (temp->root->degree != degree) {
 			return NULL;
 		}
 		if (temp1 == temp) {
@@ -67,5 +67,7 @@ public:
 	}
 	void view(string nameHeap);
 	void view(int key, string nameHeap);
+	void merge(binomial_heap H);
+	void insert(node*& Node);
 };
 

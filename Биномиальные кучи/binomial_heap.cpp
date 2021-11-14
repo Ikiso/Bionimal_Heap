@@ -87,11 +87,48 @@ void binomial_heap::viewUnit(unit* Unit, string nameHeap) {
 	unit* temp = Unit;
 	unit* temp1 = Unit;
 	do {
-		cout << nameHeap << ":(" << temp1->degree << "|" << temp1->key << ") ";// << setw(5 * temp1->degree) << ' ';
+		cout << nameHeap << ":(" << temp1->degree << "|" << temp1->key << ") ";
 		temp1 = temp1->sibling;
 	} while (temp1 != NULL);
 	cout << endl;
 	viewUnit(temp->child, nameHeap);
+}
+
+void binomial_heap::merge(binomial_heap H) {
+	node* temp = H.head;
+	node* temp1 = NULL;
+	if (temp == NULL) {
+		return;
+	}
+	while (temp->next != NULL) {
+		insert(temp1);
+		temp1 = temp;
+		temp = temp->next;
+	}
+	insert(temp1);
+	insert(temp);
+}
+
+void binomial_heap::insert(node*& Node) {
+	if (Node == NULL) {
+		return;
+	}
+	node* temp = head;
+	if (temp == NULL) {
+		head = Node;
+		Node->next = NULL;
+		return;
+	}
+	if (temp->root->degree > Node->root->degree) {
+		head = Node;
+		Node->next = temp;
+		return;
+	}
+	while (temp->next != NULL && temp->next->root->degree <= Node->root->degree ) {
+		temp = temp->next;
+	}
+	Node->next = temp->next;
+	temp->next = Node;
 }
 
 binomial_heap::binomial_heap(int size) {

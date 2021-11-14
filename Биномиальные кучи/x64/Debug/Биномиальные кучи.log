@@ -1,0 +1,6 @@
+﻿  binomial_heap.cpp
+  binomial_tree.cpp
+  Биномиальные кучи.cpp
+C:\Documents\Учёба\C#\Bionimal_Heap\Биномиальные кучи\Биномиальные кучи.cpp(12,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Создание кода...
+  Биномиальные кучи.vcxproj -> C:\Documents\Учёба\C#\Bionimal_Heap\x64\Debug\Биномиальные кучи.exe
