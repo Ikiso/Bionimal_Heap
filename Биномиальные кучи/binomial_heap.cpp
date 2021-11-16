@@ -131,6 +131,118 @@ void binomial_heap::insert(node*& Node) {
 	temp->next = Node;
 }
 
+void binomial_heap::sort() {
+	node* temp = head;
+	if (temp == NULL) {
+		return;
+	}
+	if (temp->next == NULL) {
+		return;
+	}
+	if (temp->next->next == NULL) {
+		if (temp->root->degree == temp->next->root->degree) {
+			if (temp->root->key <= temp->next->root->key) {
+				temp->next->root->parent = temp->root;
+				temp->next->root->sibling = temp->root->child;
+				temp->root->child = temp->next->root;
+				temp->root->degree = temp->root->degree + 1;
+				delete temp->next;	
+				temp->next = NULL;
+			}
+			else
+			{
+				head = temp->next;
+				temp->root->parent = temp->next->root;
+				temp->root->sibling = temp->next->root->child;
+				temp->next->root->child = temp->root;
+				temp->next->root->degree = temp->next->root->degree + 1;
+				delete temp;
+			}
+		}
+		return;
+	}
+	while (1) {
+		if (temp->next->next == NULL) {
+			/*if (temp->next->root->degree == temp->next->next->root->degree) {
+				if (temp->next->root->key <= temp->next->next->root->key) {
+					temp->next->next->root->parent = temp->next->root;
+					temp->next->next->root->sibling = temp->next->root->child;
+					temp->next->root->child = temp->next->next->root;
+					temp->next->root->degree = temp->next->root->degree + 1;
+					delete temp->next->next;
+					temp->next->next = NULL;
+				}
+				else
+				{
+					temp = temp->next;
+					temp->next->root->parent = temp->next->next->root;
+					temp->next->root->sibling = temp->next->next->root->child;
+					temp->next->next->root->child = temp->next->root;
+					temp->next->next->root->degree = temp->next->next->root->degree + 1;
+					node* temp1 = temp->next;
+					temp->next = temp->next->next;
+					delete temp1;
+				}
+				return;
+			}*/
+			if (temp->root->degree == temp->next->root->degree) {
+				if (temp->root->key <= temp->next->root->key) {
+					temp->next->root->parent = temp->root;
+					temp->next->root->sibling = temp->root->child;
+					temp->root->child = temp->next->root;
+					temp->root->degree = temp->root->degree + 1;
+					delete temp->next;
+					temp->next = NULL;
+				}
+				else
+				{
+					head = temp->next;
+					temp->root->parent = temp->next->root;
+					temp->root->sibling = temp->next->root->child;
+					temp->next->root->child = temp->root;
+					temp->next->root->degree = temp->next->root->degree + 1;
+					delete temp;
+				}
+			}
+			return;
+		}
+		if (temp->root->degree != temp->next->root->degree) {
+			temp = temp->next;
+			continue;
+		}
+		if (temp->root->degree == temp->next->root->degree && temp->next->root->degree == temp->next->next->root->degree) {
+			temp = temp->next;
+			continue;
+		}
+		if (temp->root->degree == temp->next->root->degree && temp->next->root->degree != temp->next->next->root->degree) {
+			if (temp->root->key <= temp->next->root->key) {
+				temp->next->root->parent = temp->root;
+				temp->next->root->sibling = temp->root->child;
+				temp->root->child = temp->next->root;
+				temp->root->degree = temp->root->degree + 1;
+				node* temp1 = temp->next;
+				temp->next = temp->next->next;
+				delete temp1;
+			}
+			else
+			{
+				temp->root->parent = temp->next->root;
+				temp->root->sibling = temp->next->root->child;
+				temp->next->root->child = temp->root;
+				temp->next->root->degree = temp->next->root->degree + 1;
+				node* temp1 = head;
+				while (temp1->next != temp) {
+					temp1 = temp1->next;
+				}
+				temp1->next = temp->next;
+				delete temp;
+			}
+			continue;
+		}
+	};
+	return;
+}
+
 binomial_heap::binomial_heap(int size) {
 	create(size);
 }

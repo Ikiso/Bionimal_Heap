@@ -69,5 +69,6 @@ public:
 	void view(int degree, string nameHeap);
 	void merge(binomial_heap H);
 	void insert(node*& Node);
+	void sort();
 };
 

@@ -13,7 +13,7 @@ int main()
     int temp;
     cout << "Введите число узлов: ";
     cin >> temp;
-    binomial_heap H{temp};
+    binomial_heap H{ temp };
     H.view("H");
     cout << "\nВведите индекс узла, который требуется удалить: ";
     cin >> temp;
@@ -26,7 +26,10 @@ int main()
     cout << endl << endl;
     H.merge(D);
     H.view("H");
-    cout << "Чтобы получить список элементов в корне введите индекс корня объекта: ";
+    cout << endl << "Отсортированная куча:\n";
+    H.sort();
+    H.view("H");
+    cout << "\nЧтобы получить список элементов в корне введите индекс корня объекта: ";
     cin >> temp;
     H.view(temp, "H");
 }
