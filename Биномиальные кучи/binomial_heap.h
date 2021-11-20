@@ -51,11 +51,17 @@ public:
 					temp_unit = temp1->root;
 					temp1 = NULL;
 				}
-				temp = newHead;
+				if (temp1 == NULL) break;
+				temp1->next = newHead;
+				newHead = temp1;
+<<<<<<< Updated upstream
+=======
+				/*temp = newHead;
 				while (temp->next != NULL) {
 					temp = temp->next;
 				}
-				temp->next = temp1;
+				temp->next = temp1;*/
+>>>>>>> Stashed changes
 			}
 			//temp = head;
 			//while (temp->next != NULL && temp->root->key != key) {

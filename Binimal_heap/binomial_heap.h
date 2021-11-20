@@ -4,14 +4,17 @@
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QWidget>
+#include <QVBoxLayout>
 #include "binomial_tree.h"
 
 class binomial_heap : public Binomial_tree
 {
 public:
     binomial_heap(QWidget *parent = 0);
-    QGridLayout *grid = new QGridLayout(this);
+    QGridLayout * grid;
+    QVBoxLayout  * menuGrid;
     void view();
+    void menu();
     void viewUnit(unit* Unit, QString nameHeap);
     //binomial_heap();
         binomial_heap(int size);
@@ -58,11 +61,9 @@ public:
                         temp_unit = temp1->root;
                         temp1 = NULL;
                     }
-                    temp = newHead;
-                    while (temp->next != NULL) {
-                        temp = temp->next;
-                    }
-                    temp->next = temp1;
+                    if (temp1 == NULL) break;
+                    temp1->next = newHead;
+                    newHead = temp1;
                 }
                 //temp = head;
                 //while (temp->next != NULL && temp->root->key != key) {
@@ -74,11 +75,66 @@ public:
         }
         void view(QString nameHeap);
         void view(int degree, QString nameHeap);
-        void merge(binomial_heap H);
+        void merge(node* head);
         void insert(node*& Node);
         void sort();
         void changeQrid(unit*temp1, int xx, int xy);
         int sdvig(int i);
+        void cleargrid(QGridLayout *layout, int row, int row_end){
+            for (            int row_temp = row;row_temp <= row_end ; row_temp++) {
+                removeRow(layout, row_temp, true);
+            }
+        }
+        // Удаляет содержимое данной строки макета.
+          static void removeRow(QGridLayout *layout, int row, bool deleteWidgets = true) {
+            remove(layout, row, -1, deleteWidgets);
+            layout->setRowMinimumHeight(row, 0);
+            layout->setRowStretch(row, 0);
+          }
+
+
+
+          // Удаляет содержимое заданного столбца макета.
+          static void removeColumn(QGridLayout *layout, int column, bool deleteWidgets = true) {
+            remove(layout, -1, column, deleteWidgets);
+            layout->setColumnMinimumWidth(column, 0);
+            layout->setColumnStretch(column, 0);
+          }
+
+
+
+          // Удаляет содержимое данной ячейки макета.
+          static void removeCell(QGridLayout *layout, int row, int column, bool deleteWidgets = true) {
+            remove(layout, row, column, deleteWidgets);
+          }
+private:
+          static void remove(QGridLayout *layout, int row, int column, bool deleteWidgets) {
+              for (int i = layout->count() - 1; i >= 0; i--) {
+                int r, c, rs, cs;
+                layout->getItemPosition(i, &r, &c, &rs, &cs);
+                if (
+                    (row == -1 || (r <= row && r + rs > row)) &&
+                    (column == -1 || (c <= column && c + cs > column))) {
+                  // Этот элемент макета подлежит удалению.
+                  QLayoutItem *item = layout->takeAt(i);
+                  if (deleteWidgets) {
+                    deleteChildWidgets(item);
+                  }
+                  delete item;
+                }
+              }
+            }
+          static void deleteChildWidgets(QLayoutItem *item) {
+              QLayout *layout = item->layout();
+              if (layout) {
+                // Рекурсивно обрабатывать все дочерние элементы.
+                int itemCount = layout->count();
+                for (int i = 0; i < itemCount; i++) {
+                  deleteChildWidgets(layout->itemAt(i));
+                }
+              }
+              delete item->widget();
+            }
 };
 
 #endif // BINOMIAL_HEAP_H
