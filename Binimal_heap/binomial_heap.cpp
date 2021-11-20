@@ -235,10 +235,7 @@ void binomial_heap::changeQrid(unit*temp1, int xy, int xx) {
                                                                     ");}");
             btn->setEnabled(false);
             grid->addWidget(btn, xy, xx + sdvig);
-      //  }
-       // else {
-
-        //}
+        //grid->addItem(btn, xy, xx + sdvig, 2, 1, 1);
         int xyy = xy + 1;
         changeQrid(temp, xyy, xx);
         xx = xx + sdvig;
@@ -340,7 +337,7 @@ void binomial_heap::menu(){
         menuGrid->addWidget(wwod);
         QLabel * binary = new QLabel(this);
         //binary->setFrameShape();
-        //binary->setText("1023 - 1111111111");
+        binary->setText("Введите число узлов");
         menuGrid->addWidget(binary);
         QPushButton *btn = new QPushButton("Проверить", this);
         btn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
