@@ -7,15 +7,18 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //MainWindow w;
-    //w.show();
     binomial_heap window;
-    window.create(511);
-    //binomial_heap H(window.deleteRoot(4));
-    //window.merge(H);
-    window.move(300, 300);
+    window.menu();
+    //window.create(1023);
+    //binomial_heap D(window.deleteRoot(4));
+    //D.move(600, 320);
+    //D.show();
+    //D.view();
+    //window.merge(D.head);
+    window.move(600, 320);
     window.setWindowTitle("Биномиальные кучи");
     window.show();
-    window.view();
+    //window.view();
+
     return a.exec();
 }

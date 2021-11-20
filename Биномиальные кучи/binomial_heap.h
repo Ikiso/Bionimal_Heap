@@ -51,11 +51,9 @@ public:
 					temp_unit = temp1->root;
 					temp1 = NULL;
 				}
-				temp = newHead;
-				while (temp->next != NULL) {
-					temp = temp->next;
-				}
-				temp->next = temp1;
+				if (temp1 == NULL) break;
+				temp1->next = newHead;
+				newHead = temp1;
 			}
 			//temp = head;
 			//while (temp->next != NULL && temp->root->key != key) {

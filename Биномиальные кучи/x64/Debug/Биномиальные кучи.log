@@ -1,1 +1,6 @@
-﻿  Биномиальные кучи.vcxproj -> C:\Documents\Учёба\C#\Bionimal_Heap\x64\Debug\Биномиальные кучи.exe
+﻿  binomial_heap.cpp
+  Биномиальные кучи.cpp
+C:\Documents\Учёба\C#\Bionimal_Heap\Биномиальные кучи\Биномиальные кучи.cpp(12,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Создание кода...
+  LINK : не найден или не выполнена сборка C:\Documents\Учёба\C#\Bionimal_Heap\x64\Debug\Биномиальные кучи.exe при последней инкрементной компоновке; выполняется полная компоновка
+  Биномиальные кучи.vcxproj -> C:\Documents\Учёба\C#\Bionimal_Heap\x64\Debug\Биномиальные кучи.exe
