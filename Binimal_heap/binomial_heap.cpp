@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <bitset> //для создания по битам
+#include "mainwindow.h"
 
 binomial_heap::binomial_heap(QWidget *parent) : Binomial_tree(parent)
 {
@@ -190,13 +191,13 @@ void binomial_heap::sort() {
     return;
 }
 
-binomial_heap::binomial_heap(int size) {
-    create(size);
-}
+//binomial_heap::binomial_heap(int size) {
+//    create(size);
+//}
 
-binomial_heap::binomial_heap(node* head) {
-    this->head = head;
-}
+//binomial_heap::binomial_heap(node* head) {
+//    this->head = head;
+//}
 
 //binomial_heap::binomial_heap() {
 //}
@@ -299,7 +300,54 @@ void binomial_heap::view(){
                                                         ");}"
                                                         "QPushButton:pressed{border-style: inset;"
                                                         "background: #bbb;}");
-    connect(btn, &QPushButton::clicked, [=]{ this->close();}); //changeQrid(grid, temp->root, 1, x)
+    connect(btn, &QPushButton::clicked, [=]{
+        //binomial_heap::cleargrid(grid, 1, max_degree);
+//        this->resize(100, 10);
+//        move(600, 320);
+        QLineEdit * wwod = new QLineEdit(this);
+        wwod->setStyleSheet("width: 20px; height:40px;");
+        //wwod->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        wwod->setText("");
+        wwod->setInputMask("00");
+        grid->addWidget(wwod, 1, x + 1);
+        QPushButton *btn = new QPushButton("Ок", this);
+        btn->setFixedSize(40, 40);
+        btn->setStyleSheet("QPushButton{"
+                                                            "color: #333;"
+                                                            "border: 2px solid #555;"
+                                                            "border-radius: 20px;"
+                                                            "border-style: outset;"
+                                                            "background: qradialgradient( cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop: 0 #fff, stop: 1 #888);"
+                                                            "padding: 5px;}"
+                                                            "QPushButton:hover{background: qradialgradient("
+                                                            "cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4,"
+                                                            "radius: 1.35, stop: 0 #fff, stop: 1 #bbb"
+                                                            ");}"
+                                                            "QPushButton:pressed{border-style: inset;"
+                                                            "background: qradialgradient("
+                                                                "cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1,"
+                                                                "radius: 1.35, stop: 0 #fff, stop: 1 #ddd"
+                                                                ");}");
+        connect(btn, &QPushButton::clicked, [=]
+        {
+            int vvod = wwod->text().toInt();
+            if (vvod != NULL) {
+                node * temp = head;
+                while (temp != NULL && temp->root->degree != vvod) {
+                    temp = temp->next;
+                }
+                if (temp != NULL)
+                if (temp->root->degree == vvod) {
+                    wwod->setText("00");
+                    node * newhead = deleteRoot(vvod);
+                    binomial_heap::cleargrid(grid, 0, max_degree);
+                    view();
+                    view(newhead, max_degree);
+                }
+            }
+        });
+        grid->addWidget(btn, 1, x + 2);
+    });
     grid->addWidget(btn, 0, x + 1);
     btn = new QPushButton("Clear", this);
     btn->setFixedSize(40, 40);
@@ -316,13 +364,114 @@ void binomial_heap::view(){
                                                         ");}"
                                                         "QPushButton:pressed{border-style: inset;"
                                                         "background: #bbb;}");
-    connect(btn, &QPushButton::clicked, [=]{ binomial_heap::cleargrid(grid, 1, max_degree); this->resize(100, 10); move(600, 320);});
+    connect(btn, &QPushButton::clicked, [=]{ binomial_heap::cleargrid(grid, 1, max_degree - 1); this->resize(100, 10); move(600, 320);});
     grid->addWidget(btn, 0, x + 2);
+    btn = new QPushButton("Sort", this);
+    btn->setFixedSize(40, 40);
+    btn->setStyleSheet("QPushButton{"
+                       "background: qradialgradient("
+                                              "cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4,"
+                                              "radius: 1.35, stop: 0 #fff, stop: 1 rgb(78, 90, 255)"
+                                              ");"
+                       "color: rgb(51, 44, 255);"
+                       "border: 2px solid #555;"
+                       "border-radius: 20px;"
+                       "border-style: outset;"
+                       "}"
+                       "QPushButton:hover{background: #cbcbcb;}"
+                       "QPushButton:pressed{border-style: inset;"
+                       "background: qradialgradient("
+                           "cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1,"
+                           "radius: 1.35, stop: 0 #fff, stop: 1 rgb(144, 174, 255)"
+                           ");}");
+    connect(btn, &QPushButton::clicked, [=]{
+        binomial_heap::cleargrid(grid, 0, max_degree);
+        sort();
+        view();
+    });
+    grid->addWidget(btn, 0, x + 3);
 }
 
 int binomial_heap::sdvig(int i){
     if (i == 0) return 1;
     return pow(2, i-1);
+}
+
+void binomial_heap::view(node * head, int y){
+    node*temp = head;
+    int x = 0, max_degree = 0;
+
+    if (temp == NULL) {
+        return;
+    }
+
+    while (temp != NULL) {
+        QString name_button;
+        int sdvig;
+        sdvig = binomial_heap::sdvig(temp->root->degree);
+        name_button += QString::number(temp->root->degree) + "\n" + QString::number(temp->root->key);
+        QPushButton *btn = new QPushButton(name_button, this);
+        btn->setFixedSize(40, 40);
+        btn->setStyleSheet("QPushButton{"
+                                                            "color: #333;"
+                                                            "border: 2px solid #555;"
+                                                            "border-radius: 20px;"
+                                                            "border-style: outset;"
+                                                            "background: qradialgradient( cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop: 0 #fff, stop: 1 #888);"
+                                                            "padding: 5px;}"
+                                                            "QPushButton:hover{background: qradialgradient("
+                                                            "cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4,"
+                                                            "radius: 1.35, stop: 0 #fff, stop: 1 #bbb"
+                                                            ");}"
+                                                            "QPushButton:pressed{border-style: inset;"
+                                                            "background: qradialgradient("
+                                                                "cx: 0.4, cy: -0.1, fx: 0.4, fy: -0.1,"
+                                                                "radius: 1.35, stop: 0 #fff, stop: 1 #ddd"
+                                                                ");}");
+        connect(btn, &QPushButton::clicked, [=]{ binomial_heap::changeQrid(temp->root, y + 1, x);});
+        grid->addWidget(btn, y, x + sdvig);
+        x = x + sdvig;
+        max_degree = temp->root->degree;
+        temp =  temp->next;
+    }
+    QPushButton * btn = new QPushButton("Clear", this);
+    btn->setFixedSize(40, 40);
+    btn->setStyleSheet("QPushButton{"
+                                                        "color: #333;"
+                                                        "border: 2px solid #aa0000;"
+                                                        "border-radius: 20px;"
+                                                        "border-style: outset;"
+                                                        "background: qradialgradient( cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop: 0 #e50000, stop: 1 #ff00e6);"
+                                                        "padding: 5px;}"
+                                                        "QPushButton:hover{background: qradialgradient("
+                                                        "cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4,"
+                                                        "radius: 1.35, stop: 0 #e50000, stop: 1 #bbb"
+                                                        ");}"
+                                                        "QPushButton:pressed{border-style: inset;"
+                                                        "background: #bbb;}");
+    connect(btn, &QPushButton::clicked, [=]{ binomial_heap::cleargrid(grid, y+1, max_degree - 1); this->resize(100, 10); move(600, 320);});
+    grid->addWidget(btn, y, x + 1);
+    btn = new QPushButton("+", this);
+    btn->setFixedSize(40, 40);
+    btn->setStyleSheet("QPushButton{"
+                                                        "color: #333;"
+                                                        "border: 2px solid #aa0000;"
+                                                        "border-radius: 20px;"
+                                                        "border-style: outset;"
+                                                        "background: qradialgradient( cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4, radius: 1.35, stop: 0 #e50000, stop: 1 #ff00e6);"
+                                                        "padding: 5px;}"
+                                                        "QPushButton:hover{background: qradialgradient("
+                                                        "cx: 0.3, cy: -0.4, fx: 0.3, fy: -0.4,"
+                                                        "radius: 1.35, stop: 0 #e50000, stop: 1 #bbb"
+                                                        ");}"
+                                                        "QPushButton:pressed{border-style: inset;"
+                                                        "background: #bbb;}");
+    connect(btn, &QPushButton::clicked, [=]{
+        binomial_heap::cleargrid(grid, y, max_degree);
+        //sort();
+        view();
+    });
+    grid->addWidget(btn, y, x + 2);
 }
 
 void binomial_heap::menu(){

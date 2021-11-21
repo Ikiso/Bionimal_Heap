@@ -14,11 +14,11 @@ public:
     QGridLayout * grid;
     QVBoxLayout  * menuGrid;
     void view();
+    void view(node * head, int y);
     void menu();
     void viewUnit(unit* Unit, QString nameHeap);
-    //binomial_heap();
-        binomial_heap(int size);
-        binomial_heap(node* head);
+//        binomial_heap(int size);
+//        binomial_heap(node* head);
         node* head = new node; //голова списка
         void create(int size); //функция создания элементов по числу узлов
         node* deleteRoot(int degree) {
