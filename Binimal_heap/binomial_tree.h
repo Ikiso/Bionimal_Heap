@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QString>
 
+
+
 class Binomial_tree : public QWidget
 {
     Q_OBJECT

@@ -23,6 +23,21 @@
       <height>591</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+                                                        color: #333;
+                                                        border: 2px solid #0ba300;
+                                                        border-radius: 20px;
+                                                        border-style: outset;
+                                                        
+	background-color: qlineargradient(spread:reflect, x1:0.341, y1:0.063, x2:0.451923, y2:0.904, stop:0 rgba(0, 255, 116, 243), stop:1 rgba(103, 222, 27, 239));
+                                                        padding: 5px;}
+                                                        QPushButton:hover{
+
+background-color: qlineargradient(spread:pad, x1:0.471, y1:0, x2:0.596, y2:1, stop:0 rgba(29, 192, 29, 222), stop:0.995192 rgba(12, 167, 115, 230));}
+                                                        QPushButton:pressed{border-style: inset;
+                                                        background: #bbb;}</string>
+    </property>
     <property name="text">
      <string>PushButton</string>
     </property>
